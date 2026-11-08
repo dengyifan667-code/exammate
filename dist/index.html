@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ExamMate 智能期末考试助手：上传课表和学校考试安排，生成个人考试日程。" />
+  <title>ExamMate｜智能期末考试助手</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <button class="brand" type="button" data-go="home" aria-label="返回首页">
+        <span class="brand-mark" aria-hidden="true">E</span>
+        <span>ExamMate</span>
+      </button>
+      <nav class="nav" aria-label="主导航">
+        <button type="button" data-go="home" class="nav-link active">首页</button>
+        <button type="button" data-go="upload" class="nav-link">开始匹配</button>
+        <button type="button" data-go="schedule" class="nav-link">我的考试</button>
+      </nav>
+      <div class="privacy-pill"><span></span>文件仅在本机处理</div>
+    </header>
+
+    <main>
+      <section id="screen-home" class="screen active hero-screen">
+        <div class="hero-copy">
+          <div class="eyebrow"><span>✦</span> 专为大学生设计的考试信息助手</div>
+          <h1>你的考试安排，<br><em>一目了然。</em></h1>
+          <p>上传个人课表和学校考试安排，ExamMate 自动识别课程、匹配班级，并生成专属于你的期末考试日程。</p>
+          <div class="hero-actions">
+            <button class="btn primary" type="button" data-go="upload">开始生成考试安排 <span>→</span></button>
+            <button class="btn secondary" type="button" id="demo-from-home">先体验示例</button>
+          </div>
+          <div class="trust-row">
+            <span>✓ 无需注册</span><span>✓ 本地解析</span><span>✓ 结果可人工核对</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="ExamMate 日程预览">
+          <div class="floating-card status-card"><span class="status-dot"></span><div><b>匹配完成</b><small>5 门课程已找到</small></div></div>
+          <div class="preview-window">
+            <div class="preview-head"><span>我的考试安排</span><span class="mini-chip">2026-2027 秋季</span></div>
+            <div class="date-block"><b>JAN</b><strong>05</strong><span>周二</span></div>
+            <div class="preview-exam"><div class="course-icon">高</div><div><b>高等数学 A</b><span>09:00–11:00 · 博学楼 B203</span></div><span class="confirmed">已确认</span></div>
+            <div class="date-block muted"><b>JAN</b><strong>08</strong><span>周五</span></div>
+            <div class="preview-exam"><div class="course-icon blue">英</div><div><b>大学英语 III</b><span>14:00–16:00 · 求真楼 A106</span></div><span class="review">待确认</span></div>
+          </div>
+          <div class="floating-card source-card"><span>PDF</span><div><b>来源可追溯</b><small>学校安排第 12 页</small></div></div>
+        </div>
+        <div class="steps-strip">
+          <div><span>01</span><b>上传两份文件</b><small>课表 + 学校考试安排</small></div>
+          <i></i><div><span>02</span><b>智能解析匹配</b><small>课程编号与班级双重核验</small></div>
+          <i></i><div><span>03</span><b>获得个人日程</b><small>时间地点清晰呈现</small></div>
+        </div>
+      </section>
+
+      <section id="screen-upload" class="screen page-screen">
+        <div class="page-heading">
+          <button class="back-link" type="button" data-go="home">← 返回首页</button>
+          <div class="step-kicker">第 1 步，共 3 步</div>
+          <h2>上传你的考试资料</h2>
+          <p>我们需要两份文件来找出只属于你的考试安排。</p>
+        </div>
+        <div class="upload-grid">
+          <article class="upload-card" id="timetable-card">
+            <div class="card-number">01</div>
+            <div class="upload-icon mint">JPG</div>
+            <h3>个人课程表</h3>
+            <p>用于识别你本学期实际修读的课程和班级</p>
+            <label class="dropzone" for="timetable-input">
+              <input id="timetable-input" type="file" accept=".pdf,.jpg,.jpeg,.png,.csv,.txt" />
+              <span class="plus">＋</span><b>点击选择或拖入文件</b><small>支持 JPG / PNG / PDF / CSV / TXT，最大 20MB</small>
+            </label>
+            <div class="file-result" id="timetable-result"></div>
+          </article>
+          <article class="upload-card" id="exam-card">
+            <div class="card-number">02</div>
+            <div class="upload-icon aqua">PDF</div>
+            <h3>学校考试安排</h3>
+            <p>学校发布的全校期末考试安排原始文件</p>
+            <label class="dropzone" for="exam-input">
+              <input id="exam-input" type="file" accept=".pdf,.csv,.txt" />
+              <span class="plus">＋</span><b>点击选择或拖入文件</b><small>推荐 PDF，也支持 CSV / TXT，最大 50MB</small>
+            </label>
+            <div class="file-result" id="exam-result"></div>
+          </article>
+        </div>
+        <div class="format-tip"><span>i</span><div><b>你的“课程名（班级号）”规则已加入</b><p>例如“高等数学（2）”会与考试文件中的同名同班记录优先精确匹配。JPG/PNG 课表会先在浏览器本地 OCR，清晰、正拍的图片识别效果最好。</p></div></div>
+        <div class="upload-actions">
+          <button class="btn ghost" type="button" id="load-demo">没有文件？使用示例数据</button>
+          <button class="btn primary wide" type="button" id="start-parse" disabled>开始智能匹配 <span>→</span></button>
+        </div>
+      </section>
+
+      <section id="screen-progress" class="screen page-screen progress-screen">
+        <div class="page-heading compact"><div class="step-kicker">第 2 步，共 3 步</div><h2 id="progress-title">正在整理你的考试安排</h2><p id="progress-subtitle">请稍候，文件正在你的浏览器中安全处理。</p></div>
+        <div class="progress-card">
+          <div class="progress-orbit"><div class="progress-ring" id="progress-ring"><span id="progress-number">0%</span></div><i></i><i></i><i></i></div>
+          <div class="progress-bar"><span id="progress-bar-fill"></span></div>
+          <div class="process-list">
+            <div class="process-row active" data-process="0"><span class="process-state">1</span><div><b>读取文件内容</b><small>识别文字与表格行</small></div><em>进行中</em></div>
+            <div class="process-row" data-process="1"><span class="process-state">2</span><div><b>提取个人课程</b><small>整理课程编号、名称和班级</small></div><em>等待中</em></div>
+            <div class="process-row" data-process="2"><span class="process-state">3</span><div><b>智能匹配考试</b><small>按课程编号、名称与班级核验</small></div><em>等待中</em></div>
+            <div class="process-row" data-process="3"><span class="process-state">4</span><div><b>生成个人日程</b><small>保留来源页码与待确认项目</small></div><em>等待中</em></div>
+          </div>
+          <button class="btn primary hidden" id="view-result" type="button">查看我的考试安排 <span>→</span></button>
+        </div>
+      </section>
+
+      <section id="screen-schedule" class="screen page-screen schedule-screen">
+        <div class="schedule-heading">
+          <div><div class="step-kicker">第 3 步，共 3 步</div><h2>我的考试安排</h2><p id="schedule-summary">所有考试已按时间排序。</p></div>
+          <button class="btn secondary small" type="button" data-go="upload">＋ 重新上传</button>
+        </div>
+        <div class="stats-grid">
+          <div><span class="stat-icon">▦</span><strong id="stat-total">0</strong><small>考试总数</small></div>
+          <div><span class="stat-icon success">✓</span><strong id="stat-confirmed">0</strong><small>已确认</small></div>
+          <div><span class="stat-icon warning">!</span><strong id="stat-review">0</strong><small>待你确认</small></div>
+          <div><span class="stat-icon blue">◷</span><strong id="stat-countdown">—</strong><small>距首场考试</small></div>
+        </div>
+        <div class="schedule-toolbar">
+          <div class="tabs"><button class="active" data-filter="all">全部考试</button><button data-filter="confirmed">已确认</button><button data-filter="review">待确认 <span id="review-badge">0</span></button></div>
+          <label class="search"><span>⌕</span><input id="search-input" type="search" placeholder="搜索课程或地点" /></label>
+        </div>
+        <div id="review-panel" class="review-panel hidden">
+          <div><span>!</span><div><b>有课程需要你确认</b><p>同名课程存在多个考试安排。请选择与你班级一致的一项。</p></div></div>
+          <button class="btn warning-btn" id="open-first-review" type="button">现在确认</button>
+        </div>
+        <div id="exam-list" class="exam-list"></div>
+        <div id="empty-state" class="empty-state hidden"><span>⌕</span><b>没有找到符合条件的考试</b><p>试试清除搜索词或切换筛选条件。</p></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="detail-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <article class="detail-modal">
+      <button class="modal-close" type="button" aria-label="关闭">×</button>
+      <div id="modal-content"></div>
+    </article>
+  </div>
+
+  <div class="toast hidden" id="toast" role="status"></div>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
